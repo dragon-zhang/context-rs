@@ -23,7 +23,8 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --release --all
+          args: --release --all --target ${{ matrix.target }}
+          use-cross: ${{ !startsWith(matrix.target, 'x86_64') && contains(matrix.target, 'linux') && '1' || '0' }}
         env:
           CHANNEL: ${{ matrix.channel }}
           CROSS: ${{ !startsWith(matrix.target, 'x86_64') && contains(matrix.target, 'linux') && '1' || '0' }}
